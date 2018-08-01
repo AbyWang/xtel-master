@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdxt.dl.web.sys.dao.UserInfoDao">
+
+	<!-- 分页用户信息 -->
+	<select id="getUserWithPage" resultType="UserInfo">
+		<!-- select a.roomid,a.roomname,a.capacity,a.roomstatus,a.lockstatus from 
+			ROOMINFOTABLE a order by a.roomid -->
+		select
+		a.USERID,a.USERNAME,a.GROUPID,a.REGISTTIME,a.PURCHASEDCOURSE,a.PASSCOURSE,a.EXCELLENTCOURSE,
+		a.LEARNINGCOURSE,a.COMPLETECOURSE,a.LECTURES,a.ISONLINE,a.LOGINTIME,a.PASSWORD,a.STATUS
+		from XTEL_USERINFOTABLE a where
+		1=1
+		<if test="idVlaue!=null">
+			and a.USERID=#{idVlaue}
+		</if>
+		<if test="nameVlaue!=null and nameVlaue!=''">
+            <![CDATA[
+			AND a.USERNAME LIKE CONCAT(CONCAT('%', #{nameVlaue}), '%')
+			]]>
+		</if>
+		order by a.USERID
+
+	</select>
+	<!-- 分页查询角色信息 -->
+	<select id="getRoleWithPage" resultType="map">
+		select a.id userId,a.name name from xtel_systemmanager a
+
+	</select>
+
+	<!-- 通过登录名查询systemManager -->
+	<select id="getSystemManagerByLoginName" resultType="SystemManager">
+		select *
+		from XTEL_SYSTEMMANAGER x where x.name=#{loginName}
+	</select>
+
+	<!-- 通过登录名查询group -->
+	<select id="getUserInfoByLoginName" resultType="UserInfo">
+    select x.* from  xtel_groupmanager t left join 
+    xtel_userinfotable  x on t.id=x.userid
+     where x.username=#{loginName}
+	</select>
+
+	<!-- 动态更新manager -->
+	<update id="updateSystemManager">
+		update XTEL_SYSTEMMANAGER
+		<trim prefix="set" suffixOverrides=",">
+			<if test="isOnline!=null">
+				isOnline=#{isOnline},
+			</if>
+			<if test="lastLoginTime!=null and lastLoginTime!=0">
+				lastLoginTime=#{lastLoginTime},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<!-- 动态更新manager -->
+	<update id="updateOnlineByUserId">
+		update xtel_userinfotable
+		<trim prefix="set" suffixOverrides=",">
+			<if test="isOnline!=null">
+				isOnline=#{isOnline},
+			</if>
+			<if test="lastLoginTime!=null and lastLoginTime!=0">
+				logintime=#{lastLoginTime},
+			</if>
+		</trim>
+		where userid=#{id}
+	</update>
+
+
+
+	<!-- 查询菜单，递归查询
+	<select id="getUserMenuList" parameterType="int" resultType="MenuFunction">
+		select x.id ,x.parent ,x.url ,x.page_name ,x.page_order,
+		x.page_level,x.icon ,x.status ,x.type from xtel_userinfotable t
+		left join xtel_groupinfo s on t.groupid=s.id
+		left join xtel_group_function p on s.id=P.Group_Id
+
+		left join xtel_function x on p.menu_id=X.Id
+		where x.status='1' and x.type='0'
+		<if test="userId!=null">
+			and t.userid=#{userId}
+		</if> -->
+		<!-- <choose> 
+		   <when test="parentId!=null and parentId!=''"> and x.parent=#{parentId} 
+			</when>
+			 <otherwise> and x.parent is null
+			  </otherwise> 
+			</choose> start with 
+			parent is null connect by prior id=parent order by x.page_order
+	</select> -->
+
+	<!-- 查询菜单，递归查询 -->
+	<select id="getSystemMenuList" resultType="MenuFunction">
+		select x.id ,x.parent
+		,x.url ,x.page_name ,x.page_order,
+		x.page_level,x.icon ,x.status
+		,x.type from
+		xtel_function x where x.status='1' and x.type='0'
+	</select>
+
+
+</mapper>

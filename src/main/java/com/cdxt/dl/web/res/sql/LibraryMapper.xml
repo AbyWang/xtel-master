@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdxt.dl.web.res.dao.LibraryDao">
+
+<!-- 分页课件信息 -->
+<select id="getlibraryPage"  resultType="map" parameterType="map">
+ 	SELECT a.ID,a.NAME,a.UPLOADERID,a.UPLOADTIME,a.URL,a.HITS,a.LIKES,x.USERNAME,X.USERID FROM XTEL_ArticleLibrary a 
+ 	inner join XTEL_USERINFOTABLE x 
+ 	on a.UPLOADERID=x.USERID
+</select>
+</mapper>

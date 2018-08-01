@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdxt.dl.web.teach.dao.TeachingManageDao">
+
+<!-- 分页课程信息信息 -->
+<select id="getTeachingPage"  resultType="map" parameterType="map">
+<!--  select a.roomid,a.roomname,a.capacity,a.roomstatus,a.lockstatus
+  from ROOMINFOTABLE a 
+ 	order by a.roomid-->
+ 	select  a.COURSEID,a.LECTUREID,a.NAME,a.STATUS,a.TOTALCLASS,a.PRICE,a.TYPE,
+ 	a.SOLD,a.PASS,a.LASTCLASSTIME,a.REVIEWERID,x.USERNAME 
+ 	from XTEL_COURSEINFO a inner join XTEL_USERINFOTABLE x on a.LECTUREID=x.USERID
+</select>
+<!-- 根据id查看课程的信息 -->
+<select id="getTeachingByid"  resultType="map" parameterType="int">
+<!--  select a.roomid,a.roomname,a.capacity,a.roomstatus,a.lockstatus
+  from ROOMINFOTABLE a 
+ 	order by a.roomid-->
+ 	select  a.COURSEID,a.LECTUREID,a.NAME,a.STATUS,a.TOTALCLASS,a.PRICE,a.TYPE,
+ 	a.SOLD,a.PASS,a.LASTCLASSTIME,a.REVIEWERID,a.BRIEF,a.NUMBEROFEXPECTED,x.USERNAME 
+ 	from XTEL_COURSEINFO a inner join XTEL_USERINFOTABLE x on a.LECTUREID=x.USERID where a.COURSEID=#{cpurseID}
+</select>
+<!-- 根据id修改课程信息状态 -->
+<update id="updateTeachingStatus" parameterType="int">
+	update XTEL_COURSEINFO set STATUS=2 where COURSEID=#{teachingID}
+</update>
+<!-- 查询课程安排信息 -->
+<select id="getCourseArrangementeInfoPage" resultType="map" parameterType="map">
+  select  a.COURSEID,a.LECTUREID,a.NAME,a.TOTALCLASS,a.PRICE,a.TYPE,
+ 	a.SOLD,a.PASS,a.LASTCLASSTIME,a.REVIEWERID,c.ID,c.TIME,c.STATUS,B.USERNAME 
+ 	from XTEL_CourseArrangement c left join  XTEL_COURSEINFO a on c.COURSEID=a.COURSEID  
+ 	inner join XTEL_UserInfoTable b on a.LECTUREID=b.USERID where c.STATUS=0
+
+</select>
+<!-- 修改课程安排申请状态 -->
+<update id="updateCourseArrangementStatus" parameterType="int">
+
+update XTEL_CourseArrangement set STATUS=1 where ID=#{id}
+
+</update>
+
+
+</mapper>

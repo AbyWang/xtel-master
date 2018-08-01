@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdxt.dl.web.res.dao.ResourcesDao">
+
+<!-- 分页课件信息 -->
+<select id="getResourcesPage"  resultType="map" parameterType="map">
+ 	SELECT x.COURSEWAREID,x.DESCRIPTION,a.NAME,a.COURSEID,t.USERNAME,t.USERID ,x.UPLOADTIME FROM XTEL_COURSEINFO  a inner join XTEL_CoursewareInfo x on a.COURSEID=x.COURSEID
+left join XTEL_USERINFOTABLE  t on x.UPLOADERID=t.USERID
+</select>
+<!-- 查询课程的课件数量 -->
+<select id="findCoursewareInfoByidcount" parameterType="int" resultType="int">
+<!-- select count(*) from XTEL_COURSEINFO a  inner join XTEL_CoursewareInfo x  on  a.COURSEID=x.COURSEID
+where x.COURSEID=#{courseId} -->
+select count(*) from XTEL_CoursewareInfo x 
+where x.COURSEID=(select a.COURSEID from XTEL_CoursewareInfo a where a.COURSEWAREID=#{courseId})
+</select>
+<!-- 删除课件信息 -->
+<delete id="deleteCoursewareInfoByid" parameterType="int">
+delete XTEL_CoursewareInfo  where COURSEWAREID=#{courseId}
+</delete>
+
+
+
+
+</mapper>
