@@ -152,23 +152,24 @@ var path = "<%=path%>";
                <div class="breadcrumbs" id="breadcrumbs">
 					<!-- <ul class="breadcrumb" id="breadcrumb"></ul> -->
 					<div class="layui-tab layui-tab-card" style='box-shadow:none;' lay-filter="tabcard" lay-allowclose="true">
-					  <ul class="layui-tab-title" id="layuiTabTitle">
-					  	<li lay-id="201801161150" class="layui-this">首页</li>
+					  <ul class="layui-tab-title  top_tab" id="layuiTabTitle">
+					  <!--<li lay-id="201801161150" class="layui-this">首页</li>  -->	
+					    	<li class="layui-this" ><cite>首页</cite></li>
 					  </ul>
 					  <div class="layui-tab-content" id='layuiTabContent'>
-					  	<div class="layui-tab-item layui-show" style="background-color: #fff;width: 1400px;min-height:700px;overflow: scroll;">
+					  	<div class="layui-tab-item  layui-show" style="background-color: #fff;width: 1400px;min-height:700px;overflow: scroll;">
 					  		<%@include  file="main_index2.jsp"%>
 				  		</div>
 					  </div>
 					</div>
-				    <dl class="layui-nav-child" id="tabMenu">
+			    <dl class="layui-nav-child" id="tabMenu">
 				      <dd><a class="freshCurrTab" href="javascript:;">刷新当前页面</a></dd>
 				      <dd><a class="closeCurrTab" href="javascript:;">关闭当前页面</a></dd>
 				      <dd><a class="closeOtherTab" href="javascript:;">关闭其它页面</a></dd>
 				      <dd><a class="closeRightTab" href="javascript:;">关闭右边页面</a></dd>
 				      <dd><a class="closeLeftTab" href="javascript:;">关闭左边页面</a></dd>
 				      <dd><a class="closeAllTab" href="javascript:;">关闭所有页面</a></dd>
-				    </dl>
+				    </dl>-
 			</div>
 
 			<script type="text/javascript">
@@ -255,6 +256,11 @@ var path = "<%=path%>";
 	        });
 	    }
 		
+	   $(function(){
+		   
+	   })
+	   
+	   
 </script>
 	
 </bo<body>

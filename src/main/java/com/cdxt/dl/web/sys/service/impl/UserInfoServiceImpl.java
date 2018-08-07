@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdxt.dl.web.sys.dao.UserInfoDao;
 import com.cdxt.dl.web.sys.pojo.MenuFunction;
@@ -17,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 
 
 @Service
+@Transactional
 public class UserInfoServiceImpl implements UserInfoService {
 
 	@Resource

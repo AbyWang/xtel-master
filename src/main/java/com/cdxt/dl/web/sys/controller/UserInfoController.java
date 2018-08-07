@@ -1,7 +1,9 @@
 package com.cdxt.dl.web.sys.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ import com.cdxt.dl.core.constant.SysConstants;
 import com.cdxt.dl.core.model.PagePojo;
 import com.cdxt.dl.core.model.ResJson;
 import com.cdxt.dl.core.util.MD5;
+import com.cdxt.dl.core.util.PropertyUtil;
 import com.cdxt.dl.web.sys.pojo.MenuFunction;
 import com.cdxt.dl.web.sys.pojo.SystemManager;
 import com.cdxt.dl.web.sys.pojo.UserInfo;
@@ -207,4 +210,6 @@ public class UserInfoController {
 		return page;
 
 	}
+
+
 }
