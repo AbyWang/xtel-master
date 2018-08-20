@@ -235,9 +235,6 @@ h4{
        var url=$("#url").val();
        var username=$("#username").val();
        var password=$("#password").val();
-       console.log(url);
-       console.log(username);
-       console.log(password);
 	    $.ajax({
 		      type : 'POST',
 		      url : "systemController/updateDbInfo",// 请求的action路径

@@ -8,7 +8,6 @@ import java.io.Serializable;
  * @date 2018-03-13 17:50
  *
  */
-@SuppressWarnings("javadoc")
 public class ResJson implements Serializable {
 
 	private static final long serialVersionUID = 1L;

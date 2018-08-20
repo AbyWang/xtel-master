@@ -51,7 +51,8 @@
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean"
 	    p:configLocation="classpath:mybatis-config.xml" p:dataSource-ref="dataSource" 
 		p:mapperLocations="classpath:com/cdxt/dl/web/**/*Mapper.xml">
-	    <property name="typeAliasesPackage" value="com.cdxt.dl.web.sys.pojo,com.cdxt.dl.web.group.pojo"/>
+	    <property name="typeAliasesPackage" value="com.cdxt.dl.web.sys.pojo,
+	    com.cdxt.dl.web.group.pojo,com.cdxt.dl.web.teach.pojo"/>
 		</bean>
    <!-- 声明接口 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"

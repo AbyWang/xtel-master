@@ -19,4 +19,15 @@ public interface GroupManageService {
 
 	List<Map<String, Object>>  getGroupRoomMemberWithPage(Integer roomId, Integer startRow, Integer pageSize);
 
+	/**
+	 * 
+	 * @Title: ListGroupTree
+	 * @author wangxiaolong
+	 * @Description:查询权限下的所有群组
+	 * @param
+	 * @return
+	 */
+	ResJson listAllGroup(Integer groupId);
+
+
 }

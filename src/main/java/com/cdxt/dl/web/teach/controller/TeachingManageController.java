@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cdxt.dl.core.constant.SysConstants;
 import com.cdxt.dl.core.model.PagePojo;
+import com.cdxt.dl.core.model.ResJson;
 import com.cdxt.dl.core.util.PageUtil;
+import com.cdxt.dl.web.sys.pojo.UserInfo;
+import com.cdxt.dl.web.teach.pojo.CourseInfo;
 import com.cdxt.dl.web.teach.service.TeachingManageService;
 
 @Controller
@@ -44,6 +51,76 @@ public class TeachingManageController {
 		return "teach/arrangeList";
 	}
 	
+	
+
+	/**
+	 * 
+	 * @Title: getoSignUp
+	 * @author wangxiaolong
+	 * @Description:报名跳转
+	 * @param
+	 * @return
+	 */
+	@RequestMapping("/getoCourseDetail")
+	public String getoCourseDetail(HttpServletRequest request,@Param(value="courseId")Integer courseId){
+		CourseInfo courseInfo=teachingManageService.getCourseInfoByid(courseId);
+		request.setAttribute("courseInfo", courseInfo);
+		return "teach/arrangeDetail";
+	}
+	
+	/**
+	 * 
+	 * @Title: listCourseApply
+	 * @author wangxiaolong
+	 * @Description:查询所有的排课申请
+	 * @param
+	 * @return
+	 */
+	@RequestMapping("/listCourseApply")
+	@ResponseBody
+	public PagePojo listCourseApply(@Param(value="groupId")Integer groupId,HttpServletRequest request,
+			@Param(value="pageNo")Integer pageNo,@Param(value="pageSize")Integer pageSize){
+		HttpSession session=request.getSession();
+		UserInfo userInfo=(UserInfo)session.getAttribute(SysConstants.SYS_ADMIN);
+		if(groupId==null){
+			groupId=userInfo.getGroupId();
+		}
+		List<Map<String,Object>>list= teachingManageService.listCourseApply(groupId,pageNo,pageSize);
+		
+		return PageUtil.Map2PageInfo(list);
+	}
+	
+	/**
+	 * 
+	 * @Title: courseApply
+	 * @author wangxiaolong
+	 * @Description:课程审核
+	 * @param
+	 * @return
+	 */
+	@RequestMapping("/courseApply")
+	@ResponseBody
+	public ResJson courseApply(HttpServletRequest request,@Param(value="courseId")Integer courseId){
+
+		return teachingManageService.courseApply(courseId);
+		
+	}
+	
+	/**
+	 * 
+	 * @Title: registerApply
+	 * @author wangxiaolong
+	 * @Description:报名审核
+	 * @param
+	 * @return
+	 */
+	@RequestMapping("/registerApply")
+	@ResponseBody
+	public ResJson registerApply(HttpServletRequest request,@Param(value="id")Integer id){
+
+		return teachingManageService.registerApply(id);	
+
+	}
 	/**
 	 * 
 	 * @Title: getTeachingPage
@@ -156,4 +233,21 @@ public class TeachingManageController {
 	  
   }
 	
+	/**
+	 * 
+	 * @Title: listRegister
+	 * @author wangxiaolong
+	 * @Description:报名申请
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(value ="/listRegister")
+	@ResponseBody
+	public PagePojo listRegister(HttpServletRequest request,@Param(value="pageNo")Integer pageNo,@Param(value="pageSize")Integer pageSize){
+		
+		List<Map<String, Object>> map=teachingManageService.listRegister(pageNo,pageSize);
+		return PageUtil.Map2PageInfo(map);
+	}
+	
+
 }

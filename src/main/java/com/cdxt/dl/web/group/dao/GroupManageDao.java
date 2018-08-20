@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
-
 import com.cdxt.dl.web.group.pojo.GroupInfo;
 
 public interface GroupManageDao {
@@ -14,5 +13,11 @@ public interface GroupManageDao {
 
 
 	List<Map<String, Object>> getGroupRoomMemberWithPage(@Param("roomId")Integer roomId);
+
+
+	List<GroupInfo>  listGroup();
+	
+	List<GroupInfo> listGroupTree(Integer groupId);
+
 
 }

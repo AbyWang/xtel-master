@@ -35,6 +35,20 @@ public class CommonController {
 		return new ModelAndView("main/login");
 	}
 	
+	
+	/**
+	 * 
+	 * @Title: gotoRegisterReview
+	 * @author wangxiaolong
+	 * @Description:报名审核
+	 * @param
+	 * @return
+	 */
+	@RequestMapping("/gotoRegisterApply")
+	public String gotoRegisterApply(){
+		return "teach/registerList";
+	}
+	
 	/**
 	 * 
 	 * @Title: systemLogin

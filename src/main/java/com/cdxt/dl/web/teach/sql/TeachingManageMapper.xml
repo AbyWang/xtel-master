@@ -41,4 +41,63 @@ update XTEL_CourseArrangement set STATUS=1 where ID=#{id}
 </update>
 
 
+<!-- 修改课程安排申请通过 -->
+<update id="courseApply" parameterType="int">
+
+  update XTEL_CourseInfo set status=2 where CourseID=#{courseId}
+  
+</update>
+
+<!-- 报名审核安排申请通过 -->
+<update id="registerApply" parameterType="int">
+
+  update XTEL_SignupList set status=1 where id=#{id}
+  
+</update>
+
+
+
+<resultMap type="com.cdxt.dl.web.teach.pojo.CourseInfo"  id="courseDetailInfo" >  
+ <id column="courseID" property="courseID"/>
+ <result column="price" property="price"/>
+ <result column="name" property="name"/>
+ <result column="totalclass" property="totalClass"/>
+ <result column="type" property="type"/>
+ <result column="brief" property="brief"/>
+ <collection property="coursePlan" ofType="com.cdxt.dl.web.teach.pojo.CoursePlan">
+            <id column="id" property="id"/>
+            <result column="classnumber" property="classNumber"/>
+            <result column="time" property="time"/>
+  </collection>
+ </resultMap>
+
+
+<!-- 查询课程信息单一记录 -->
+<select id="getCourseInfoByid" parameterType="int" resultMap="courseDetailInfo">
+select a.courseID,a.price,a.name,a.totalclass,a.type,a.brief,
+ b.classnumber,b.time from  XTEL_COURSEINFO a left join XTEL_CourseArrangement b
+ on a.courseID=b.courseID where a.COURSEID=#{cpurseID}
+</select>
+<!--查询群组下所有的课程申请-->
+<select id="listCourseApply" resultType="map" parameterType="int">
+
+       select m.COURSEID,m.LECTUREID,m.NAME,m.TOTALCLASS,m.PRICE,m.TYPE,
+          m.SOLD,m.PASS,m.REVIEWERID,m.status,t.name groupName
+ 	      from XTEL_GroupInfo t join XTEL_UserInfotable p
+          on t.id=p.GroupID  join XTEL_CourseInfo m on p.userid=m.LectureID  
+           where 1=1 
+         <if test="groupId!=null">
+          and id in( select  m.id from xtel_groupinfo m start with 
+           m.id=#{groupId} connect by prior m.id=m.superiorgroupid )
+         </if>
+         order by m.status
+</select>
+
+<!--查询群组下所有的报名申请-->
+<select id="listRegister" resultType="map" >
+   select  t.id,t.time,s.name courseName, p.username userName from  
+   XTEL_SignupList t left join XTEL_CourseInfo s
+   on t.CourseID=s.CourseID  left join XTEL_UserInfotable p on t.UserID=p.UserID
+   where t.status='0' 
+</select>
 </mapper>

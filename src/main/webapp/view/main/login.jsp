@@ -150,7 +150,6 @@ function newLogin() {
 	      error : function() {// 请求失败处理函数
 	      },
 	      success : function(data) {
-	    	  console.log(data);
 	        if (data.code==1) {
 	        	window.location.href = actionurl;
 	        }else{

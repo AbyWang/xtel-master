@@ -27,7 +27,7 @@
 			<when test="parentId!=null and parentId!=''">
 				and a.SUPERIORGROUPID=#{parentId}
 			</when>
-			<otherwise> and a.SUPERIORGROUPID is null
+			<otherwise> and a.SUPERIORGROUPID='0'
 			</otherwise>
 			</choose>
 	</select>
@@ -42,6 +42,12 @@
 
 	</select>
 
+   <!-- 该权限下的所有群组 -->
+	<select id="listGroupTree" resultType="groupInfo" parameterType="int">
 
+       select  * from xtel_groupinfo t start with 
+       t.superiorgroupid=#{groupId} connect by prior t.id=t.superiorgroupid 
+	
+	</select>
 
 </mapper>

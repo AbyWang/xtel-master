@@ -26,4 +26,5 @@ public interface UserInfoService {
 	List<MenuFunction> getUserMenuList();
 	
 	int updateOnlineByUserId(Integer id,long loginTime,Integer isOnline);
+	
 }

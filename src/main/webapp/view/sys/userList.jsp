@@ -23,10 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="plug-in/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 <script src="plug-in/bootstrap-table/bootstrap-table.js"></script>
 <script src="plug-in/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<!-- <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
-<script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js"></script> -->
-
 <!-- Layer组件引用 -->
 <script src="plug-in/layer/layer.js"></script>
 

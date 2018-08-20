@@ -32,10 +32,10 @@ public class GroupManageServiceImpl implements GroupManageService {
 			map = new HashMap<String,Object>();
 			map = new HashMap<String,Object>();
 			map.put("name",group.getName());
-	
+
 			if (group.getIsLeaf()!=null&&group.getIsLeaf()==1) {
 				map.put("type","item");
-				
+
 			}else {
 				map.put("parentId",group.getId());
 				map.put("type","folder");
@@ -52,5 +52,38 @@ public class GroupManageServiceImpl implements GroupManageService {
 		return groupManageDao.getGroupRoomMemberWithPage(roomId);
 
 	}
+
+
+	/**
+	 * 
+	 * @Title: ListGroupTree
+	 * @author wangxiaolong
+	 * @Description:查询权限下的所有群组
+	 * @param
+	 * @return
+	 */
+	public ResJson listAllGroup(Integer groupId){
+		List<GroupInfo>groupList=groupManageDao.listGroupTree(groupId);
+		List<Map<String,Object>>dataList=new ArrayList<Map<String,Object>>();
+		Map<String,Object> map = null;
+		for (GroupInfo group : groupList) {
+			map = new HashMap<String,Object>();
+			map.put("id", group.getId());
+			map.put("name", group.getName());
+			map.put("nocheck", false);
+			map.put("struct","TREE"); 
+			//map.put("otherParam", group);
+			if (group.getSuperiorGroupID()!=null) {
+				map.put("parentId",group.getSuperiorGroupID());
+				map.put("open",false);
+			}else {
+				map.put("parentId","0");
+				map.put("open",false);
+			}
+			dataList.add(map);
+		}
+		return new ResJson(SysConstants.STRING_ONE,"",dataList);
+	}
+
 
 }

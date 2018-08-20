@@ -76,11 +76,8 @@ var path = "<%=path%>";
 							</a></li>
 						</ul></li>
 				</ul>
-				<!-- /.ace-nav -->
 			</div>
-			<!-- /.navbar-header -->
 		</div>
-		<!-- /.container -->
 	</div>
 	
 
@@ -125,7 +122,6 @@ var path = "<%=path%>";
 
 						<span class="btn btn-warning"></span> <span class="btn btn-danger"></span>					</div>
 				</div>
-				<!-- #sidebar-shortcuts -->
                 <!--左边菜单 -->
 				<ul id="menuList" class="nav nav-list">
 
@@ -146,9 +142,6 @@ var path = "<%=path%>";
 			</div>
 
 			<div class="main-content" id="mains">
-			<!-- <iframe id="mainframe" name="mainframe" src="view/main/bootm.jsp"
-					style="width: 100%;border: 0px;"> </iframe> -->	
-					               <!-- 子页面头部导航，工具栏 -->
                <div class="breadcrumbs" id="breadcrumbs">
 					<!-- <ul class="breadcrumb" id="breadcrumb"></ul> -->
 					<div class="layui-tab layui-tab-card" style='box-shadow:none;' lay-filter="tabcard" lay-allowclose="true">
@@ -169,7 +162,7 @@ var path = "<%=path%>";
 				      <dd><a class="closeRightTab" href="javascript:;">关闭右边页面</a></dd>
 				      <dd><a class="closeLeftTab" href="javascript:;">关闭左边页面</a></dd>
 				      <dd><a class="closeAllTab" href="javascript:;">关闭所有页面</a></dd>
-				    </dl>-
+				    </dl>
 			</div>
 
 			<script type="text/javascript">
@@ -250,7 +243,7 @@ var path = "<%=path%>";
 	            btn: ['确定','取消'], //按钮
 	            shade: false //不显示遮罩
 	        }, function(){
-	            location.href="<%=path%>/user/logout";
+	            location.href="<%=path%>/logout";
 	        }, function(){
 	            return;
 	        });

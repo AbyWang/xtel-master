@@ -5,9 +5,40 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.cdxt.dl.web.teach.pojo.CourseInfo;
+
 public interface TeachingManageDao {
 
+	/**
+	 * 
+	 * @Title: listCourseApply
+	 * @author wangxiaolong
+	 * @Description:课程申请列表
+	 * @param
+	 * @return
+	 */
+	List<Map<String,Object>> listCourseApply(@Param("groupId")Integer groupId);
 
+	/**
+	 * @Title: courseApply
+	 * @author wangxiaolong
+	 * @Description:课程申请审批
+	 * @param
+	 * @return
+	 */
+	int courseApply(int courseId);
+	
+	
+	CourseInfo getCourseInfoByid(int cpurseID);
+	/**
+	 * 
+	 * @Title: registerApply
+	 * @author wangxiaolong
+	 * @Description:报名审核
+	 * @param
+	 * @return
+	 */
+	int registerApply(int id);
 	/**
 	 * 
 	 * @Title: getTeachingPage
@@ -40,7 +71,7 @@ public interface TeachingManageDao {
 	 * @return
 	 */
 	int  updateTeachingStatus(@Param("teachingID") Integer teachingID);
-	
+
 	/**
 	 * 
 	 * @Title: getCourseArrangementeInfoPage
@@ -53,4 +84,14 @@ public interface TeachingManageDao {
 
 
 	void updateCourseArrangementStatus(@Param("id")int id);
+
+	/**
+	 * 
+	 * @Title: listRegister
+	 * @author wangxiaolong
+	 * @Description:排课申请列表
+	 * @param
+	 * @return
+	 */
+	List<Map<String, Object>> listRegister();
 }

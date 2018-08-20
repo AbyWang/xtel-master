@@ -44,9 +44,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <button id="btn_add" type="button" class="btn btn-primary btn-sm" onclick="add('新增','','jeecgDemoList',600,400)">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
-            <button id="btn_edit" type="button" class="btn btn-success btn-sm" onclick="update('修改','','jeecgDemoList',600,400)">
+           <!--  <button id="btn_edit" type="button" class="btn btn-success btn-sm" onclick="update('修改','','jeecgDemoList',600,400)">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-            </button>
+            </button> -->
               </div>
         <div class="table-responsive">
             <!-- class="text-nowrap" 强制不换行 -->
@@ -64,30 +64,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						aria-hidden="true">×
 				</button>
 				<h4 class="modal-title" id="myModalLabel">
-					数据库修改
+					版本发布
 				</h4>
 			</div>
 			<div class="modal-body">
 
 				<div class="form-group">
-                   <label>数据库url:</label>
+                   <label>版本号:</label>
                     <input class="form-control" type="text" id="url" datatype="*" />
                          
                     <div class="Validform_checktip"></div>
                                                               
                  </div>
                  <div class="form-group">
-                        <label >数据库用户名:</label>
+                        <label >ios安装包:</label>
                         <input class="form-control" type="text"  id="username"  datatype="*"/>
                         
                         <div class="Validform_checktip">
                   </div>
                                                               
                   <div class="form-group">
-                       <label>数据库密码:</label>
+                       <label>android安装包:</label>
                        <input class="form-control" type="text" id="password"  datatype="*"/>
                       <div class="Validform_checktip">
-                 </div>                                                 
+                 </div>   
+                 <div class="form-group">
+                       <label>PC安装包:</label>
+                       <input class="form-control" type="text" id="password"  datatype="*"/>
+                      <div class="Validform_checktip">
+                 </div> 
+                  <div class="form-group">
+                       <label>更新日志:</label>
+                       <input class="form-control" type="text" id="password"  datatype="*"/>
+                      <div class="Validform_checktip">
+                 </div>                                                      
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" 
@@ -110,6 +120,11 @@ $(function () {
 });
 	
 	
+	
+function updateVersion(index){
+    var rdata=data[index];
+ 	$('#myModal').modal('show');
+ }
 
 function loadTable(flag){
 	
@@ -143,7 +158,7 @@ versionList.initColumn= function () {
        {title: '操作', align: 'center', valign: 'middle',width:'50px', formatter: 
 	      function (value, row, index) {
     	    data[index]=row;
-            return "<button class='btn btn-sm btn-success'  onclick=updateDb('"+index+"')><i class='icon-edit bigger-180'></i>修改</button>&nbsp;"
+            return "<button class='btn btn-sm btn-success'  onclick=updateVersion('"+index+"')><i class='icon-edit bigger-180'></i>修改</button>&nbsp;"
            }
         }];}
 </script>

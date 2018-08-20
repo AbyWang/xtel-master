@@ -173,4 +173,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public int updateOnlineByUserId(Integer id,long loginTime,Integer isOnline){
 		return userInfoDao.updateOnlineByUserId(id,loginTime,isOnline);
 	}
+	
+
 }
