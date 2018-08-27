@@ -34,6 +34,7 @@ public class UserInfo {
 	private long loginTime;//最近登录时间
 	private String  password;//登录密码
 	private Integer status;//用户状态
+	private Integer userType;//用户类型
 	public Integer getUserId() {
 		return userId;
 	}
@@ -119,5 +120,11 @@ public class UserInfo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+	public Integer getUserType() {
+		return userType;
+	}
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
+
 }

@@ -256,6 +256,6 @@ var path = "<%=path%>";
 	   
 </script>
 	
-</bo<body>
+<body>
 </html>
 

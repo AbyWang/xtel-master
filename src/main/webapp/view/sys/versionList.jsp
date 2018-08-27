@@ -11,33 +11,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">
 <title>版本列表</title>
 <!-- Jquery组件引用 -->
-<script src="plug-in/jquery/jquery-1.9.1.js"></script>
-<!-- <script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script> -->
-<!-- bootstrap组件引用 -->
-<link href="plug-in/bootstrap3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<script src="plug-in/bootstrap3.3.5/js/bootstrap.min.js"></script>
-<!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
 
+<link href="plug-in/bootstrap3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="plug-in/bootstrap3.3.5/css/default.css" rel="stylesheet" />
 <!-- bootstrap table组件以及中文包的引用 -->
 <link href="plug-in/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<script src="plug-in/jquery/jquery-1.9.1.js"></script>
+<script src="plug-in/bootstrap3.3.5/js/bootstrap.min.js"></script>
 <script src="plug-in/bootstrap-table/bootstrap-table.js"></script>
 <script src="plug-in/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-<!-- <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
-<script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js"></script> -->
-
 <!-- Layer组件引用 -->
-<script src="plug-in/layer/layer.js"></script>
-
+<script src="plug-in/layui/layui.js"></script>
 <!-- 通用组件引用 -->
-<link href="plug-in/bootstrap3.3.5/css/default.css" rel="stylesheet" />
-<script src="js/bootstrap-curdtools.js"></script>
-
+<script src="js/common.js"></script>
 </head>
-
-<body>
-
      <div class="panel-body" style="padding-bottom:0px;">
         <!-- 搜索 -->
         <div id="toolbar">
@@ -111,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script src="js/common.js"></script>
+
 <script type="text/javascript">
 var path = "<%=path%>";
 var data=[]; 
@@ -132,7 +119,6 @@ function loadTable(flag){
     var table = new BSTable("versionList",path+ "/systemController/listSystemVersion", defaultColunms);
     table.init();
     if(flag==1){
-    	console.log(1);
     	table.refresh();
     }
 }

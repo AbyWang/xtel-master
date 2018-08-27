@@ -1,9 +1,7 @@
 package com.cdxt.dl.web.sys.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +20,6 @@ import com.cdxt.dl.core.constant.SysConstants;
 import com.cdxt.dl.core.model.PagePojo;
 import com.cdxt.dl.core.model.ResJson;
 import com.cdxt.dl.core.util.MD5;
-import com.cdxt.dl.core.util.PropertyUtil;
 import com.cdxt.dl.web.sys.pojo.MenuFunction;
 import com.cdxt.dl.web.sys.pojo.SystemManager;
 import com.cdxt.dl.web.sys.pojo.UserInfo;
@@ -51,36 +48,23 @@ public class UserInfoController {
 	public ResJson checkuser(HttpServletRequest req,@RequestParam("loginname")String loginName,
 			@RequestParam("password")String password){
 		HttpSession session=req.getSession();
-		UserInfo userInfo=userInfoService.getUserInfoByLoginName(loginName);
 		String pwMd5=MD5.toMD5(password); 
+		UserInfo userInfo=userInfoService.getUserInfoByLoginName(loginName);
 
 		if(userInfo!=null){
 			if(!pwMd5.equals(userInfo.getPassword())){
 				return new ResJson(SysConstants.STRING_ZERO,"密码错误");
 			}
 			if(userInfo.getStatus()==0){
-				return new ResJson(SysConstants.STRING_ZERO,"用户已锁定,请联系管理员");
+				return new ResJson(SysConstants.STRING_ZERO,"用户已锁定,请联系系统管理员");
+			}
+			if(userInfo.getUserType()!=0&&userInfo.getUserType()!=1){
+				return new ResJson(SysConstants.STRING_ZERO,"该用户没有权限");
 			}
 			userInfoService.updateOnlineByUserId(userInfo.getUserId(), new Date().getTime(),SysConstants.INTEGER_ONE);
 			session.setAttribute(SysConstants.SYS_ADMIN, userInfo);
-			return new ResJson(SysConstants.STRING_ONE,"登录成功",userInfo);
 		}
-		//普通管理员没查到，查询是否为超级管理员
-		//通过登录名名查询manager
-		SystemManager manager=userInfoService.getSystemManagerByLoginName(loginName);
-		if(manager==null || !pwMd5.equals(manager.getPassword())){
-			return new ResJson(SysConstants.STRING_ZERO,"用户名或密码错误");
-		}
-		if(manager.getStatus()==0){
-			return new ResJson(SysConstants.STRING_ZERO,"用户已锁定,请联系管理员");
-		}
-		if(manager.getIsOnline()!=1){
-			//更新在线状态和登录时间
-			userInfoService.updateSystemManager(manager.getId(),new Date().getTime(),SysConstants.INTEGER_ONE);
-		}
-
-		session.setAttribute(SysConstants.SUPPER_ADMIN, manager);
-		return new ResJson(SysConstants.STRING_ONE,"登录成功",manager);
+		return new ResJson(SysConstants.STRING_ONE,"登录成功",userInfo);
 	}
 
 
@@ -150,7 +134,6 @@ public class UserInfoController {
 	public ResJson getRootMenus(HttpServletRequest request,HttpSession session,Integer parentId) {
 		SystemManager systemManager = (SystemManager)session.getAttribute(SysConstants.SUPPER_ADMIN);
 		UserInfo userInfo=(UserInfo)session.getAttribute(SysConstants.SYS_ADMIN);
-		Integer userId=null;
 		List<MenuFunction>menuList=new ArrayList<MenuFunction>();
 		if(systemManager == null&&userInfo==null){
 			return new ResJson(SysConstants.STRING_ZERO,"请先进行登录操作！");
