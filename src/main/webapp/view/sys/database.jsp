@@ -86,10 +86,8 @@ h4{
 
 				<div class="form-group">
                    <label>数据库url:</label>
-                    <input class="form-control" type="text" id="url" datatype="*" />
-                         
-                    <div class="Validform_checktip"></div>
-                                                              
+                    <input class="form-control" type="text" id="url" datatype="*" /> 
+                    <div class="Validform_checktip"></div>                                           
                  </div>
                  <div class="form-group">
                         <label >数据库用户名:</label>
@@ -116,50 +114,6 @@ h4{
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-	<!--  <div class="row nav" >
-            <div class="col-md-6 col-sm-6 col-xs-12">
-
-                        <div class="panel-body">
-                            <form class="registerform" >
-                                        <div class="form-group">
-                                            <label>数据库地址:</label>
-                                            <input class="form-control" type="text" datatype="*" />
-                                             </br>         
-                                              <div class="Validform_checktip"></div>
-                                                              
-                                        </div>
-                                          <div class="form-group">
-                                            <label>数据库端口号:</label>
-                                            <input class="form-control" type="text"  datatype="*"/>
-                                           </br>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>数据库名称:</label>
-                                            <input class="form-control" type="text" datatype="*"/>
-                                                     </br>
-                                        </div>
-                                        
-                                          <div class="form-group">
-                                            <label>数据库账号:</label>
-                                            <input class="form-control" type="text" datatype="*"/>
-                                                   </br>
-                                        </div>
-                                          <div class="form-group">
-                                            <label class="control-label">数据库密码:</label>
-                                            <input class="form-control" type="text" datatype="*"/>
-                                             </br>
-                                            </br>
-                                        </div>
-                                 
-                                        <button type="submit" class="btn btn-success btn-lg btn-block">修改</button>
-                                        <span id="msgdemo" style="margin-left:30px;"></span>
-                                    </form>
-                        </div>
-                  </div>
-              </div>
-           </div>
-       </div>
--->
        <script>
   var data=[]; 
   var path = "<%=path%>";
@@ -206,9 +160,7 @@ h4{
 		    if(!o.obj.is("form")){//验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
 		    var objtip=o.obj.siblings(".Validform_checktip");
 					cssctl(objtip,o.type);
-			
 					objtip.text(msg);
-				
 				}else{
 					var objtip=o.obj.find("#msgdemo");
 					cssctl(objtip,o.type);
@@ -219,7 +171,6 @@ h4{
 			ajaxPost:true,
 			callback:function(form){
 			doUpdate();
-
 		}
 	})
   });

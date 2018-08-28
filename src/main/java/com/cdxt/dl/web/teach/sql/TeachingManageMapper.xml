@@ -33,21 +33,62 @@
  	inner join XTEL_UserInfoTable b on a.LECTUREID=b.USERID where c.STATUS=0
 
 </select>
-<!-- 修改课程安排申请状态 -->
+<!-- 修改课程安排申请状态
 <update id="updateCourseArrangementStatus" parameterType="int">
 
 update XTEL_CourseArrangement set STATUS=1 where ID=#{id}
 
+</update> -->
+
+
+<!-- 审核通过,更新课程申请状态、roomid -->
+<update id="courseApply">
+  update XTEL_CourseInfo set status=2,roomId=#{roomId} where CourseID=#{courseId}
 </update>
 
+  <!-- 新增用户,调用存储过程 -->
+ <select id="addMeetingRoom" statementType="CALLABLE" parameterType="java.util.HashMap" >
+    <![CDATA[
+           {call US246.ADD_NEW_MEETING_ROOM(
+              #{ROOMNAME,mode=IN,jdbcType=VARCHAR},
+              #{ROOM_CAPACITY,mode=IN,jdbcType=INTEGER},
+              #{ROOM_ID,mode=OUT,jdbcType=INTEGER}
+           )}    
+       ]]>
+</select>
 
-<!-- 修改课程安排申请通过 -->
-<update id="courseApply" parameterType="int">
+  <!-- 锁定会议室 -->
+ <select id="lockRoom" statementType="CALLABLE" parameterType="java.util.HashMap" >
+    <![CDATA[
+           {call US246.LOCK_ROOM(
+              #{ROOMID_in,mode=IN,jdbcType=INTEGER},
+              #{LOCK_TYPE,mode=IN,jdbcType=INTEGER},
+              #{RESULT_out,mode=OUT,jdbcType=INTEGER}
+           )}    
+       ]]>
+</select>
 
-  update XTEL_CourseInfo set status=2 where CourseID=#{courseId}
-  
-</update>
 
+  <!-- 获取录制客户端id -->
+ <select id="getUserId" statementType="CALLABLE" parameterType="java.util.HashMap" >
+    <![CDATA[
+           {call US246.GETUSERID(
+              #{USERSTRPARAM,mode=IN,jdbcType=VARCHAR},
+              #{USERID_RET,mode=OUT,jdbcType=INTEGER}
+           )}    
+       ]]>
+</select>
+
+
+  <!-- 新增录制客户端 -->
+ <select id="addRecorder" statementType="CALLABLE" parameterType="java.util.HashMap" >
+    <![CDATA[
+           {call US246.ADD_RECORDER_TO_ROOM(
+              #{USERID_IN,mode=IN,jdbcType=VARCHAR},
+              #{ROOMID_IN,mode=IN,jdbcType=INTEGER}
+           )}    
+       ]]>
+</select>
 <!-- 报名审核安排申请通过 -->
 <update id="registerApply" parameterType="int">
 
@@ -82,7 +123,7 @@ select a.courseID,a.price,a.name,a.totalclass,a.type,a.brief,
 <select id="listCourseApply" resultType="map" parameterType="int">
 
        select m.COURSEID,m.LECTUREID,m.NAME,m.TOTALCLASS,m.PRICE,m.TYPE,
-          m.SOLD,m.PASS,m.REVIEWERID,m.status,t.name groupName
+          m.SOLD,m.PASS,m.REVIEWERID,m.status,m.numberOfExpected,t.name groupName
  	      from XTEL_GroupInfo t join XTEL_UserInfotable p
           on t.id=p.GroupID  join XTEL_CourseInfo m on p.userid=m.LectureID  
            where 1=1 

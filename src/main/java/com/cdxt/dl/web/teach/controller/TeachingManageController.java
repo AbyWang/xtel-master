@@ -100,10 +100,11 @@ public class TeachingManageController {
 	 */
 	@RequestMapping("/courseApply")
 	@ResponseBody
-	public ResJson courseApply(HttpServletRequest request,@Param(value="courseId")Integer courseId){
+	public ResJson courseApply(HttpServletRequest request,@Param("courseId")Integer courseId,
+		@Param("numberOfExpected")Integer numberOfExpected,@Param("courseName")String courseName){
 
-		return teachingManageService.courseApply(courseId);
-		
+
+		return teachingManageService.applyAndAddMeetingRoom(courseId,numberOfExpected,courseName);	
 	}
 	
 	/**
@@ -137,10 +138,8 @@ public class TeachingManageController {
 		Map<String, Object> newmap =new HashMap<String, Object>();
 		newmap.put("nameVlaue", nameVlaue);
 		newmap.put("idVlaue", idVlaue);
-		
 		List<Map<String, Object>> map=teachingManageService.getTeachingPage(newmap,pageNo,pageSize);
 		return PageUtil.Map2PageInfo(map);
-		
 	}
 	
 	/**

@@ -71,7 +71,7 @@ arrangelist.initColumn= function () {
         {title: '课程讲师',field: 'LECTUREID', align: 'center', valign: 'middle',width:'50px'},
         {title: '总课时',field: 'TOTALCLASS', align: 'center', valign: 'middle',width:'50px'},
         {title: '价格',field: 'PRICE', align: 'center', valign: 'middle',width:'50px'},
-        {title: '课程类型',field: 'TYPE', align: 'center', valign: 'middle',width:'50px',
+         {title: '课程类型',field: 'TYPE', align: 'center', valign: 'middle',width:'50px',
         	formatter: function (value, row, index) {
             if(value==0){
 				return "传统直播授课";
@@ -96,8 +96,11 @@ arrangelist.initColumn= function () {
 
 function check(index){
     var courseId=data[index].COURSEID;
-    var name=data[index].USERNAME;
-    createdialog(name,"课程审核","lessonCenterController/courseApply?courseId="+courseId);
+    var courseName=data[index].NAME;
+    var numberOfExpected=data[index].NUMBEROFEXPECTED;
+    var url="lessonCenterController/courseApply?courseId="+courseId+"&courseName="+courseName+"&numberOfExpected="+numberOfExpected;
+
+    createdialog(name,"课程审核",url);
 }
 
 </script>

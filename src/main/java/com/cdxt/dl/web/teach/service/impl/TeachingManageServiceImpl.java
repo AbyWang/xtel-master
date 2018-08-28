@@ -1,5 +1,6 @@
 package com.cdxt.dl.web.teach.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +31,8 @@ public class TeachingManageServiceImpl implements TeachingManageService {
 		PageHelper.startPage(pageNo, pageSize);
 		return teachingManageDao.listCourseApply(groupId);
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @Title: courseApply
@@ -39,16 +40,47 @@ public class TeachingManageServiceImpl implements TeachingManageService {
 	 * @param
 	 * @return
 	 */
-	public ResJson  courseApply(Integer couorseId){
+	public ResJson  applyAndAddMeetingRoom(Integer courseId,Integer numberOfExpected,String courseName){
 		int result=0;
-		result= teachingManageDao.courseApply(couorseId);
-		if(result==1){
-			return new ResJson(SysConstants.STRING_ONE,"审核成功");
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> map =null;
+		Map<String, Object> idMap =null;
+		Map<String, Object> retMap =null;
+		paramMap.put("ROOMNAME", courseName);
+		paramMap.put("ROOM_CAPACITY", numberOfExpected);
+		//创建会议室
+		teachingManageDao.addMeetingRoom(paramMap);
+		//存储过程返回roomId
+		Integer roomId=(Integer) paramMap.get("ROOM_ID");
+		if(roomId==null){
+			return new ResJson(SysConstants.STRING_ZERO,"审核失败");
 		}
-		return new ResJson(SysConstants.STRING_ZERO,"审核失败");
+		//审核通过,更新课程申请状态、roomid
+		result=teachingManageDao.courseApply(roomId,courseId);
+		if(result!=1){
+			return new ResJson(SysConstants.STRING_ZERO,"审核失败");
+		}
+		map=new HashMap<String, Object>();
+		map.put("ROOMID_in", roomId);
+		map.put("LOCK_TYPE", 1);
+		teachingManageDao.lockRoom(paramMap);
+		//存储过程返回锁定结果
+		//Integer resultOut=(Integer) map.get("RESULT_out"); 
+		String userStrPapam=roomId+"_Recorder";
+		idMap=new HashMap<String, Object>();
+		idMap.put("USERSTRPARAM", userStrPapam);
+		//获取录制客户端id
+		teachingManageDao.getUserId(idMap);
+		Integer useridRet=(Integer) idMap.get("USERID_RET");
+		if(useridRet!=null){
+			retMap=new  HashMap<String, Object>();
+			retMap.put("USERID_IN", useridRet);
+			retMap.put("ROOMID_IN", roomId);
+		}
+		return new ResJson(SysConstants.STRING_ONE,"审核成功");
 	}
-	
-	
+
+
 	public 	ResJson registerApply(int id){
 		int result=0;
 		result= teachingManageDao.registerApply(id);
@@ -56,7 +88,7 @@ public class TeachingManageServiceImpl implements TeachingManageService {
 			return new ResJson(SysConstants.STRING_ONE,"审核成功");
 		}
 		return new ResJson(SysConstants.STRING_ZERO,"审核失败");
-		
+
 	}
 	/**
 	 * 
@@ -73,7 +105,7 @@ public class TeachingManageServiceImpl implements TeachingManageService {
 		return teachingManageDao.getTeachingPage(newmap, pageNo, pageSize);
 
 	}
-	
+
 	/**
 	 * 
 	 * @Title: getTeachingByid
@@ -88,7 +120,7 @@ public class TeachingManageServiceImpl implements TeachingManageService {
 		return teachingManageDao.getTeachingByid(cpurseID);
 	}
 
-	
+
 	/**
 	 * 
 	 * @Title: updateTeachingStatus
@@ -120,7 +152,7 @@ public class TeachingManageServiceImpl implements TeachingManageService {
 		teachingManageDao.updateCourseArrangementStatus(id);
 
 	}
-	
+
 	public 	List<Map<String,Object>> listRegister(Integer pageNo, Integer pageSize){
 		//分页
 		PageHelper.startPage(pageNo, pageSize);

@@ -35,7 +35,7 @@ public interface TeachingManageService {
 	 * @param
 	 * @return
 	 */
-	ResJson  courseApply(Integer couorseId);
+	ResJson  applyAndAddMeetingRoom(Integer courseId,Integer numberOfExpected,String courseName);
 	
 	
 	

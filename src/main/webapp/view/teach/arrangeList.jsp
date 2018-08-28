@@ -158,6 +158,7 @@ arrangelist.initColumn= function () {
         {title: '课程名称',field: 'NAME', align: 'center', valign: 'middle',width:'50px'},
         {title: '课程讲师',field: 'LECTUREID', align: 'center', valign: 'middle',width:'50px'},
         {title: '总课时',field: 'TOTALCLASS', align: 'center', valign: 'middle',width:'50px'},
+        {title: '人数上限',field: 'NUMBEROFEXPECTED', align: 'center', valign: 'middle',width:'50px'},
         {title: '价格',field: 'PRICE', align: 'center', valign: 'middle',width:'50px'},
         {title: '课程类型',field: 'TYPE', align: 'center', valign: 'middle',width:'50px',
             formatter: function (value, row, index) {
@@ -194,6 +195,8 @@ arrangelist.initColumn= function () {
 function check(index){
     var courseId=data[index].COURSEID;
     var status=data[index].STATUS;
+    var courseName=data[index].NAME;
+    var numberOfExpected=data[index].NUMBEROFEXPECTED;
     layui.use('layer', function(){
         var layer = layui.layer;
         if(status!=1){
@@ -209,7 +212,11 @@ function check(index){
         	$.ajax({
                 type : 'POST',
                 url : "teachingController/courseApply",// 请求的action路径
-                data : {courseId:courseId},
+                data : {
+                	courseId:courseId,
+                	courseName:courseName,
+                	numberOfExpected:numberOfExpected
+                	},
                 success : function(data) {
                     layer.msg(data.message, {
                         icon: data.code,
